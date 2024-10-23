@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="view_sales_quotation_tree_custom" model="ir.ui.view">
+            <field name="name">sale.order.quotation.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="sale_channel_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_sales_tree_custom" model="ir.ui.view">
+            <field name="name">sale.order.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_status']" position="before">
+                    <field name="sale_channel_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_order_form_custom" model="ir.ui.view">
+            <field name="name">sale.order-form.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <group name="partner_details" position="inside">
+                    <field name="sale_channel_id" options="{'no_open':1}"/>
+                    <field name="credit_status" widget="selection_badge" decoration-danger="credit_status == 'blocked_credit'"
+                    decoration-success="credit_status == 'available_credit'"/>
+                </group>
+                <group name="sale_info" position="inside">
+                    <field name="invoicing_journal_id" options="{'no_open':1}"/>
+                </group>
+            </field>
+        </record>
+        <record id="view_sales_order_search_custom" model="ir.ui.view">
+            <field name="name">sale.order.search.custom</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="sale_channel_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='order_month']" position="after">
+                    <separator/>
+                    <filter string="Sale Channel" name="sale_channel" domain="[]" context="{'group_by': 'sale_channel_id'}"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

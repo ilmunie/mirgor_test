@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_partner_credit_tree" model="ir.ui.view">
+        <field name="name">partner.credit.tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sale_channel_id"/>
+                <field name="sale_credit_group_id"/>
+                <field name="used_credit"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_res_partner_form_custom" model="ir.ui.view">
+        <field name="name">view.res.partner.form.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sale']" position="inside">
+                <field name="credit_control"/>
+                <field name="sale_credit_group_id" attrs="{'invisible': [('credit_control', '=', False)]}"/>
+                <field name="used_credit" attrs="{'invisible': [('sale_credit_group_id', '=', False)]}"/>
+                <field name="sale_channel_id" attrs="{'invisible': [('sale_credit_group_id', '=', False)]}"/>
+                <field name="currency_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

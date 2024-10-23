@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_channel_user,mirgor_test.sale_channel_user,mirgor_test.model_sale_channel,base.group_user,1,0,0,0
+access_sale_channel_admin,mirgor_test.sale_channel_admin,mirgor_test.model_sale_channel,sales_team.group_sale_manager,1,1,1,1
+access_sale_credit_group_user,mirgor_test.sale_credit_group_user,mirgor_test.model_sale_credit_group,base.group_user,1,0,0,0
+access_sale_credit_group_admin,mirgor_test.sale_credit_group_admin,mirgor_test.model_sale_credit_group,sales_team.group_sale_manager,1,1,1,1
+access_credit_group_wizard,mirgor_test.credit_group_wizard,mirgor_test.model_credit_group_wizard,base.group_user,1,1,1,1
+

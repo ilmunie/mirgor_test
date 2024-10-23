@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_picking_inherit_tree" model="ir.ui.view">
+		<field name="name">stock.picking.inherit.tree</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.vpicktree"/>
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="sale_channel_id" />
+            </xpath>
+		</field>
+    </record>
+    <record id="view_picking_search_inherit" model="ir.ui.view">
+		<field name="name">stock.picking.search.inherit</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_internal_search"/>
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="sale_channel_id" />
+            </xpath>
+            <xpath expr="//group[last()]" position="inside">
+                <separator/>
+                <filter string="Sale Channel" name="sale_channel" context="{'group_by': 'sale_channel_id'}"/>
+                <separator/>
+            </xpath>
+
+		</field>
+    </record>
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="report_credit_group_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Credit Group: <t t-esc="name" /></h2>
+                    <p>
+                        <strong>Group Code:</strong> <t t-esc="code" /><br/>
+                        <strong>Sales Channel:</strong> <t t-esc="channel"/><br/>
+                        <strong>Global Credit:</strong> <t t-esc="global_credit"/><span> <t t-esc="company_currency"/></span><br/>
+                        <strong>Used Credit:</strong> <t t-esc="used_credit"/><span> <t t-esc="company_currency"/></span><br/>
+                        <strong>Available Credit:</strong> <t t-esc="available_credit"/><span> <t t-esc="company_currency"/></span><br/>
+                    </p>
+                    <h3>Associated Customers</h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Document Number</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Used Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="partners" t-as="partner">
+                                <tr>
+                                    <td><t t-esc="partner['name']" /></td>
+                                    <td><t t-esc="partner['vat']" /></td>
+                                    <td><t t-esc="partner['phone']" /></td>
+                                    <td><t t-esc="partner['email']" /></td>
+                                    <td><t t-esc="partner['used_credit']" /><span> <t t-esc="company_currency"/></span></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <h3>Sales Orders Used for Credit Calculation</h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Total Amount</th>
+                                <th>Pending to Invoice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="sale_orders" t-as="sale_order">
+                                <tr>
+                                    <td><t t-esc="sale_order['name']" /></td>
+                                    <td><t t-esc="sale_order['partner_name']" /></td>
+                                    <td><t t-esc="sale_order['date']" /></td>
+                                    <td><t t-esc="sale_order['amount_total']" /><span> <t t-esc="sale_order['currency']"/></span></td>
+                                    <td><t t-esc="sale_order['pending_to_invoice']" /><span> <t t-esc="sale_order['currency']"/></span></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Invoices Section -->
+                    <h3>Unpaid Invoices Used for Credit Calculation</h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Invoice Number</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Owed Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="invoices" t-as="invoice">
+                                <tr>
+                                    <td><t t-esc="invoice['name']" /></td>
+                                    <td><t t-esc="invoice['partner_name']" /></td>
+                                    <td><t t-esc="invoice['date']" /></td>
+                                    <td><t t-esc="invoice['amount_residual']" /><span> <t t-esc="invoice['currency']"/></span></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_credit_group" model="ir.actions.report">
+        <field name="model">credit.group.wizard</field>
+        <field name="name">Credit Group Report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mirgor_test.report_credit_group_template</field>
+        <field name="report_file">mirgor_test.report_credit_group_template</field>
+    </record>
+</odoo>
